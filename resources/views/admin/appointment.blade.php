@@ -21,9 +21,9 @@
                 <select name="doctor_id" class="w-full rounded-xl border-gray-200 text-sm focus:ring-blue-500 focus:border-blue-500 p-3">
                     <option value="">All Doctors</option>
                     @foreach($doctors as $doctor)
-                        <option value="{{ $doctor->id }}" {{ request('doctor_id') == $doctor->id ? 'selected' : '' }}>
-                            Dr. {{ $doctor->name }}
-                        </option>
+                    <option value="{{ $doctor->id }}" {{ request('doctor_id') == $doctor->id ? 'selected' : '' }}>
+                        Dr. {{ $doctor->name }}
+                    </option>
                     @endforeach
                 </select>
             </div>
@@ -33,10 +33,10 @@
                 <select name="schedule_id" class="w-full rounded-xl border-gray-200 text-sm focus:ring-blue-500 focus:border-blue-500 p-3">
                     <option value="">All Time Slots</option>
                     @foreach($schedules as $sch)
-                        @php $days = [0=>'Sun', 1=>'Mon', 2=>'Tue', 3=>'Wed', 4=>'Thu', 5=>'Fri', 6=>'Sat']; @endphp
-                        <option value="{{ $sch->id }}" {{ request('schedule_id') == $sch->id ? 'selected' : '' }}>
-                            {{ $days[$sch->date] ?? '' }}: Dr. {{ $sch->doctor->name }} ({{ substr($sch->start_time, 0, 5) }})
-                        </option>
+                    @php $days = [0=>'Sun', 1=>'Mon', 2=>'Tue', 3=>'Wed', 4=>'Thu', 5=>'Fri', 6=>'Sat']; @endphp
+                    <option value="{{ $sch->id }}" {{ request('schedule_id') == $sch->id ? 'selected' : '' }}>
+                        {{ $days[$sch->date] ?? '' }}: Dr. {{ $sch->doctor->name }} ({{ substr($sch->start_time, 0, 5) }})
+                    </option>
                     @endforeach
                 </select>
             </div>
@@ -130,6 +130,14 @@
                     <td class="px-6 py-4 text-right">
                         <div class="text-[10px] text-gray-400 font-bold uppercase tracking-tighter italic">{{ $app->taken_by }}</div>
                     </td>
+                    <td class="px-6 py-4">
+                        <form action="{{ route('admin.appointments.notify', $app->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="flex items-center gap-2 bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg border border-blue-100 hover:bg-blue-600 hover:text-white transition-all text-[10px] font-bold uppercase">
+                                <i class="ri-mail-send-line"></i> Notify
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 @empty
                 <tr>
@@ -209,7 +217,7 @@
 
     document.getElementById('date_picker').addEventListener('change', function() {
         const dateObj = new Date(this.value);
-        const dayInt = dateObj.getDay(); 
+        const dayInt = dateObj.getDay();
 
         const doctorSelect = document.getElementById('doctor_select');
         doctorSelect.innerHTML = '<option>Checking clinic schedule...</option>';

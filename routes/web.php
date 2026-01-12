@@ -86,6 +86,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         Route::get('/get-schedules', [AdminAppointmentController::class, 'getSchedules'])->name('getSchedules');
         Route::post('/', [AdminAppointmentController::class, 'store'])->name('store');
         Route::patch('/{id}/status', [AdminAppointmentController::class, 'updateStatus'])->name('updateStatus');
+        Route::post('/{id}/notify', [AdminAppointmentController::class, 'notify'])->name('notify');
     });
     Route::get('/profile', [AdminProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/edit', [AdminProfileController::class, 'edit'])->name('profile.edit');
