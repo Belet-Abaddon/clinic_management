@@ -9,6 +9,8 @@ use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\AppointmentNotification;
+use Illuminate\Support\Facades\Mail;
 
 class AppointmentController extends Controller
 {
@@ -92,5 +94,21 @@ class AppointmentController extends Controller
         $appointment = Appointment::findOrFail($id);
         $appointment->update(['status' => $request->status]);
         return redirect()->back()->with('success', 'Status updated.');
+    }
+    public function notify($id)
+    {
+        // Eager load relationships to avoid errors in the email template
+        $appointment = Appointment::with('schedule.doctor')->findOrFail($id);
+
+        if (!$appointment->email) {
+            return redirect()->back()->with('error', 'No email address found for this patient.');
+        }
+
+        try {
+            Mail::to($appointment->email)->send(new AppointmentNotification($appointment));
+            return redirect()->back()->with('success', 'Notification sent to ' . $appointment->email);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Mail Error: ' . $e->getMessage());
+        }
     }
 }
