@@ -20,12 +20,21 @@ class AppointmentController extends Controller
         if ($request->doctor_id) {
             $query->whereHas('schedule', fn($q) => $q->where('doctor_id', $request->doctor_id));
         }
+
+        // NEW: Filter by specific schedule
+        if ($request->schedule_id) {
+            $query->where('schedule_id', $request->schedule_id);
+        }
+
         if ($request->status) {
             $query->where('status', $request->status);
         }
 
         $appointments = $query->latest()->get();
         $doctors = Doctor::all();
+
+        // Get schedules with doctor names for the filter dropdown
+        $schedules = Schedule::with('doctor')->get();
 
         $stats = [
             'total' => Appointment::count(),
@@ -34,7 +43,7 @@ class AppointmentController extends Controller
             'completed' => Appointment::where('status', 'completed')->count(),
         ];
 
-        return view('admin.appointment', compact('appointments', 'doctors', 'stats'));
+        return view('admin.appointment', compact('appointments', 'doctors', 'schedules', 'stats'));
     }
 
     public function getSchedules(Request $request)
