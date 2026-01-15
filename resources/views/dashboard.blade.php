@@ -54,26 +54,18 @@
                 <div class="bg-blue-50 border-2 border-dashed border-blue-200 rounded-2xl p-10 text-center">
                     <p class="text-blue-800 font-bold mb-2 text-lg">No Upcoming Visits</p>
                     <p class="text-blue-600/70 text-sm mb-6">Need a checkup? Book your slot now.</p>
-                    <a href="/appointments/create" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold text-sm shadow-lg shadow-blue-200">Book Appointment</a>
+                    <a href="{{ route('doctors.index') }}" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold text-sm shadow-lg shadow-blue-200">Book Appointment</a>
                 </div>
                 @endif
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <a href="#" class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm text-center hover:bg-slate-50">
+                <div class="grid grid-cols-2 md:grid-cols-2 gap-4">
+                    <a href="{{ route('appointments.index') }}" class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm text-center hover:bg-slate-50">
                         <i class="ri-file-list-3-line text-blue-500 text-xl block mb-1"></i>
                         <span class="text-xs font-bold text-slate-700">My Records</span>
                     </a>
-                    <a href="#" class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm text-center hover:bg-slate-50">
-                        <i class="ri-capsule-line text-emerald-500 text-xl block mb-1"></i>
-                        <span class="text-xs font-bold text-slate-700">Prescriptions</span>
-                    </a>
-                    <a href="#" class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm text-center hover:bg-slate-50">
+                    <a href="/profile" class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm text-center hover:bg-slate-50">
                         <i class="ri-user-settings-line text-purple-500 text-xl block mb-1"></i>
                         <span class="text-xs font-bold text-slate-700">Account</span>
-                    </a>
-                    <a href="#" class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm text-center hover:bg-slate-50">
-                        <i class="ri-information-line text-orange-500 text-xl block mb-1"></i>
-                        <span class="text-xs font-bold text-slate-700">Support</span>
                     </a>
                 </div>
             </div>
